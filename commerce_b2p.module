@@ -304,8 +304,9 @@ function b2p_orderWasPayed($response) {
 		return false;
 
 	// check payment state
-	if (($response->type != 'PURCHASE' && $response->type != 'EPAYMENT') || $response->state != 'APPROVED')
+	if (($response['type'] == 'PURCHASE_BY_QR' || $response['type'] == 'PURCHASE' || $response['type'] == 'AUTHORIZE') && $response['state'] == 'APPROVED')
 		return false;
+		
 
 	// check server signature
 	$tmp_response = json_decode(json_encode($response), true);
